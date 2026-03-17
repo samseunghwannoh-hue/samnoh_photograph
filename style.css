@@ -1,0 +1,342 @@
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #0a0a0a;
+  --fg: #f0ede8;
+  --fg-dim: rgba(240, 237, 232, 0.38);
+  --serif: 'Georgia', 'Times New Roman', serif;
+  --sans: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --mono: 'Courier Prime', 'Courier New', Courier, monospace;
+}
+
+html {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--sans);
+}
+
+body {
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+
+/* ── Nav ──────────────────────────────────────────────────── */
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  padding: 36px 40px;
+  z-index: 50;
+  pointer-events: none;
+}
+
+.brand {
+  font-family: var(--mono);
+  font-weight: 400;
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  color: var(--fg);
+  line-height: 1;
+}
+
+/* ── Sections ─────────────────────────────────────────────── */
+section {
+  position: relative;
+  height: 150vh;   /* taller than viewport — gives scroll travel per section */
+  overflow: hidden;
+  cursor: pointer;
+  display: flex;
+  align-items: flex-end;
+}
+
+section::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: transparent;
+  transition: background 0.5s;
+  z-index: 2;
+  pointer-events: none;
+}
+
+section:hover::after {
+  background: rgba(0, 0, 0, 0.07);
+}
+
+/* ── Background image ─────────────────────────────────────── */
+/*
+  Overshoots the section by 30% top and bottom so the parallax
+  drift never reveals a gap. With K=0.35 and 150vh sections the
+  max shift is ~0.35 × 150vh ≈ 52vh — well within the 30% buffer.
+*/
+.bg {
+  position: absolute;
+  top: -30%;
+  left: 0;
+  width: 100%;
+  height: 160%;
+  background-size: cover;
+  background-position: center 50%;
+
+  /* GPU compositor layer — eliminates sub-pixel jitter */
+  will-change: transform;
+  backface-visibility: hidden;
+  transform: translate3d(0, 0, 0);
+}
+
+/* Bottom vignette */
+.bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(10, 10, 10, 0.72) 0%,
+    rgba(10, 10, 10, 0.06) 44%,
+    transparent 100%
+  );
+}
+
+/* ── Hero section (first) — centred title ─────────────────── */
+section.section--hero {
+  align-items: center;
+  justify-content: center;
+  /* Stronger all-over vignette so centred text reads clearly */
+  background: none;
+}
+
+section.section--hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(10, 10, 10, 0.30);
+  z-index: 1;
+  pointer-events: none;
+}
+
+section.section--hero .info {
+  /* Pin to the viewport centre, not the section centre.
+     The section is 150vh tall; align-items:center would put
+     the title at 75vh — below the visible midpoint.
+     Instead, anchor absolutely at 50vh from the section top
+     (= window centre while scroll = 0) and offset upward by
+     half the element's own height with translateY(-50%). */
+  position: absolute;
+  top: 50vh;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 0;
+  text-align: center;
+  z-index: 3;
+  width: 100%;
+}
+
+section.section--hero .title {
+  font-size: clamp(1.1rem, 2.2vw, 1.8rem);
+}
+
+/* ── Title (hero section only — others use #fixed-label) ──── */
+.info {
+  position: relative;
+  z-index: 3;
+  padding: 0 44px 44px;
+}
+
+.title {
+  font-family: var(--mono);
+  font-weight: 400;
+  font-size: clamp(1.1rem, 2.2vw, 1.8rem);
+  line-height: 1.2;
+  letter-spacing: 0.02em;
+  color: var(--fg);
+}
+
+/* ── Fixed title label — sections 2+ ─────────────────────── */
+#fixed-label {
+  position: fixed;
+  bottom: 44px;
+  left: 44px;
+  z-index: 30;
+  pointer-events: none;
+}
+
+/*
+  Two-state transition:
+    default  → opacity 0, shifted 12px down  (hidden / fading out)
+    .visible → opacity 1, at rest             (fading in)
+  Fade-in:  text slides up   as opacity rises.
+  Fade-out: text slides down as opacity falls.
+*/
+.label-text {
+  display: block;
+  font-family: var(--mono);
+  font-weight: 400;
+  font-size: clamp(1.1rem, 2.2vw, 1.8rem);
+  line-height: 1.2;
+  letter-spacing: 0.02em;
+  color: var(--fg);
+  /* Keeps text legible over both dark and light section backgrounds */
+  text-shadow: 0 1px 16px rgba(0, 0, 0, 0.35);
+
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.label-text.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ══════════════════════════════════════════════════════════
+   SECTION VARIANTS
+   ══════════════════════════════════════════════════════════ */
+
+/* ── Variant: video ────────────────────────────────────────
+   <video> element reuses the same overscan + GPU rules as .bg
+   so the parallax transform can be applied to it directly.   */
+section.section--video .bg-video {
+  position: absolute;
+  top: -30%;
+  left: 0;
+  width: 100%;
+  height: 160%;
+  object-fit: cover;
+  will-change: transform;
+  backface-visibility: hidden;
+  transform: translate3d(0, 0, 0);
+  display: block;
+}
+
+/* Vignette gradient for video sections (normally on .bg::after) */
+section.section--video .vignette {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(10, 10, 10, 0.72) 0%,
+    rgba(10, 10, 10, 0.06) 44%,
+    transparent 100%
+  );
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* ── Variant: framed, framed-right, sized ──────────────────
+   These sections are 100 vh (no scroll-through needed),
+   show a solid background colour, and contain the image
+   in a centred or offset frame box.                        */
+section.section--framed,
+section.section--framed-right,
+section.section--sized {
+  height: 100vh;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Right-offset: push frame toward the right edge */
+section.section--framed-right {
+  justify-content: flex-end;
+  padding-right: 8%;
+}
+
+/*
+  The frame drifts as a whole unit — the image simply fills it.
+  Parallax transform is applied to .frame itself (via JS), so the
+  entire box floats at a slower speed than the page scroll.
+  No overscan needed on the image since it never moves independently.
+*/
+.frame {
+  flex-shrink: 0;
+  overflow: hidden;
+
+  /* GPU compositor layer — parallax transform applied here by JS */
+  will-change: transform;
+  backface-visibility: hidden;
+  transform: translate3d(0, 0, 0);
+}
+
+.frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Default frame sizes per variant
+   Override per-project with frameWidth / aspectRatio in JS  */
+section.section--framed       .frame { width: 64%; aspect-ratio: 4/3; }
+section.section--framed-right .frame { width: 55%; aspect-ratio: 4/3; }
+section.section--sized        .frame { width: 36%; aspect-ratio: 2/3; }
+
+/* ── Overlay ──────────────────────────────────────────────── */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: var(--bg);
+  z-index: 200;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.overlay.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.overlay-bar {
+  position: sticky;
+  top: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 22px 40px;
+  background: var(--bg);
+  z-index: 10;
+}
+
+.overlay-label {
+  font-family: var(--mono);
+  font-weight: 400;
+  font-size: 0.78rem;
+  color: var(--fg);
+}
+
+.overlay-close {
+  background: none;
+  border: none;
+  font-family: var(--sans);
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--fg-dim);
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.overlay-close:hover { color: var(--fg); }
+
+.gallery {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.gallery img {
+  width: 100%;
+  height: 100vh;
+  object-fit: cover;
+  display: block;
+}
+
+/* ── Mobile ───────────────────────────────────────────────── */
+@media (max-width: 600px) {
+  nav           { padding: 24px; }
+  .info         { padding: 0 24px 38px; }
+  .overlay-bar  { padding: 18px 24px; }
+  #fixed-label  { bottom: 32px; left: 24px; }
+}

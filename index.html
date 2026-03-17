@@ -1,8 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <title>Sam Noh</title>
-    </head>
-    <body></body>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sam Noh — Photography</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Courier+Prime&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <nav><div class="brand">Sam Noh</div></nav>
+
+  <!-- Fixed title shown for sections 2+ -->
+  <div id="fixed-label">
+    <span class="label-text"></span>
+  </div>
+
+  <div class="overlay" id="overlay">
+    <div class="overlay-bar">
+      <span class="overlay-label" id="overlayLabel"></span>
+      <button class="overlay-close" id="closeBtn">Close</button>
+    </div>
+    <div class="gallery" id="gallery"></div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
 </html>
