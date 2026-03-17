@@ -44,9 +44,16 @@ section {
   position: relative;
   height: 150vh;   /* taller than viewport — gives scroll travel per section */
   overflow: hidden;
-  cursor: pointer;
   display: flex;
   align-items: flex-end;
+}
+
+/* ── Section link — full-coverage click target ────────────── */
+.section-link {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  display: block;
 }
 
 section::after {
@@ -127,7 +134,7 @@ section.section--hero .info {
   transform: translate(-50%, -50%);
   padding: 0;
   text-align: center;
-  z-index: 3;
+  z-index: 11;
   width: 100%;
 }
 
@@ -138,7 +145,7 @@ section.section--hero .title {
 /* ── Title (hero section only — others use #fixed-label) ──── */
 .info {
   position: relative;
-  z-index: 3;
+  z-index: 11;
   padding: 0 44px 44px;
 }
 
@@ -264,79 +271,14 @@ section.section--framed-right {
 }
 
 /* Default frame sizes per variant
-   Override per-project with frameWidth / aspectRatio in JS  */
+   Override per-project with inline style on the .frame element  */
 section.section--framed       .frame { width: 64%; aspect-ratio: 4/3; }
 section.section--framed-right .frame { width: 55%; aspect-ratio: 4/3; }
 section.section--sized        .frame { width: 36%; aspect-ratio: 2/3; }
-
-/* ── Overlay ──────────────────────────────────────────────── */
-.overlay {
-  position: fixed;
-  inset: 0;
-  background: var(--bg);
-  z-index: 200;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.4s ease;
-  overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-}
-
-.overlay.open {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-.overlay-bar {
-  position: sticky;
-  top: 0;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 22px 40px;
-  background: var(--bg);
-  z-index: 10;
-}
-
-.overlay-label {
-  font-family: var(--mono);
-  font-weight: 400;
-  font-size: 0.78rem;
-  color: var(--fg);
-}
-
-.overlay-close {
-  background: none;
-  border: none;
-  font-family: var(--sans);
-  font-size: 0.6rem;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--fg-dim);
-  cursor: pointer;
-  transition: color 0.2s;
-}
-
-.overlay-close:hover { color: var(--fg); }
-
-.gallery {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.gallery img {
-  width: 100%;
-  height: 100vh;
-  object-fit: cover;
-  display: block;
-}
 
 /* ── Mobile ───────────────────────────────────────────────── */
 @media (max-width: 600px) {
   nav           { padding: 24px; }
   .info         { padding: 0 24px 38px; }
-  .overlay-bar  { padding: 18px 24px; }
   #fixed-label  { bottom: 32px; left: 24px; }
 }
