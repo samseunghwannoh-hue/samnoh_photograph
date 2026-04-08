@@ -204,10 +204,10 @@ section.section--hero .title {
    so the parallax transform can be applied to it directly.   */
 section.section--video .bg-video {
   position: absolute;
-  top: -30%;
+  top: -10%;
   left: 0;
-  width: 100%;
-  height: 160%;
+  width: 100vw;
+  /*height: 100%;*/
   object-fit: cover;
   will-change: transform;
   backface-visibility: hidden;
