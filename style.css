@@ -49,10 +49,12 @@ section {
 }
 
 /* ── Section link — full-coverage click target ────────────── */
+/* z-index 20: sits above .info (11) so the entire section    */
+/* area is clickable, not just the parts outside the title.   */
 .section-link {
   position: absolute;
   inset: 0;
-  z-index: 10;
+  z-index: 20;
   display: block;
 }
 
@@ -200,8 +202,14 @@ section.section--hero .title {
    ══════════════════════════════════════════════════════════ */
 
 /* ── Variant: video ────────────────────────────────────────
-   <video> element reuses the same overscan + GPU rules as .bg
-   so the parallax transform can be applied to it directly.   */
+   100vh height so the section exactly fills the viewport and
+   no empty gap appears between it and the next section.
+   The video element still has the overscan buffer (top:-30%,
+   height:160%) for the parallax drift.                      */
+section.section--video {
+  height: 100vh;
+}
+
 section.section--video .bg-video {
   position: absolute;
   top: -10%;
