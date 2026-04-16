@@ -23,7 +23,7 @@
                To swap projects: change BASE_PATH and replace
                the PHOTOS array.
 ============================================================ */
-const BASE_PATH = '../images/02_couple';
+const BASE_PATH = '../../images/02_couple';
 
 const PHOTOS = [
   /* BK — Afternoon / Sunset */
@@ -289,6 +289,18 @@ function formatTime(time) {
   return TIME_LABELS[time] || time;
 }
 
+const LOCATION_LABELS = {
+  'BK':   'Brooklyn',
+  'CP':   'Central Park',
+  'CS':   'CS',
+  'City': 'Midtown',
+  'GV':   'Greenwich Village',
+};
+
+function formatLocation(loc) {
+  return LOCATION_LABELS[loc] || loc;
+}
+
 
 /* ============================================================
    FILTER STATE
@@ -330,10 +342,10 @@ function compareKeys(a, b) {
 function formatKey(key) {
   if (filterLocation && filterTime) {
     const [loc, time] = key.split('||');
-    return `${loc}  —  ${formatTime(time)}`;
+    return `${formatLocation(loc)}  —  ${formatTime(time)}`;
   }
-  if (filterTime)     return formatTime(key);
-  return key; // location label as-is
+  if (filterTime) return formatTime(key);
+  return formatLocation(key);
 }
 
 
@@ -409,7 +421,7 @@ function renderGrid() {
 /* ============================================================
    FILTER BUTTONS
 ============================================================ */
-document.getElementById('btnLocation').addEventListener('click', function () {
+document.getElementById('btnPlace').addEventListener('click', function () {
   filterLocation = !filterLocation;
   this.classList.toggle('active', filterLocation);
   renderGrid();

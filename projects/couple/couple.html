@@ -3,31 +3,37 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Wedding — Sam Noh</title>
+  <title>Couple — Sam Noh</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Courier+Prime&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="wedding.css" />
+  <link rel="stylesheet" href="couple.css" />
 </head>
 <body>
 
   <!-- ── Intro title overlay ──────────────────────────────── -->
   <div id="intro-overlay">
-    <span id="intro-title" data-text="Wedding">Wedding</span>
+    <span id="intro-title" data-text="Couple">Couple</span>
   </div>
 
   <!-- ── Nav ─────────────────────────────────────────────── -->
   <nav class="project-nav">
-    <a href="../index.html" class="brand">Sam Noh</a>
-    <a href="../index.html" class="back-link">← Back</a>
+    <a href="../../index.html" class="brand">Sam Noh</a>
+    <a href="../../index.html" class="back-link">← Back</a>
   </nav>
 
   <!-- ── Title ────────────────────────────────────────────── -->
   <header class="project-header">
-    <h1 class="project-title">Wedding</h1>
+    <h1 class="project-title">Couple</h1>
   </header>
 
-  <!-- ── Photo grid (populated by wedding.js) ─────────────── -->
+  <!-- ── Filter bar ────────────────────────────────────────── -->
+  <div class="filter-bar">
+    <button class="filter-btn" id="btnTime">time</button>
+    <button class="filter-btn" id="btnPlace">place</button>
+  </div>
+
+  <!-- ── Photo grid (populated by couple.js) ──────────────── -->
   <div id="photoGrid"></div>
 
   <!-- ── Lightbox ─────────────────────────────────────────── -->
@@ -41,6 +47,6 @@
     <span id="lb-counter"></span>
   </div>
 
-  <script src="wedding.js"></script>
+  <script src="couple.js"></script>
 </body>
 </html>

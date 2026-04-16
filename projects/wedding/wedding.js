@@ -17,7 +17,7 @@
    GROUPS    — ordered array of { label, basePath, photos }
                basePath is relative to BASE_PATH.
 ============================================================ */
-const BASE_PATH = '../images/05_wedding';
+const BASE_PATH = '../../images/05_wedding';
 
 const GROUPS = [
   {

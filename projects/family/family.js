@@ -20,7 +20,7 @@
                Folder name format: LOCATION_time or LOCATION-time
                To swap projects: change BASE_PATH and PHOTOS.
 ============================================================ */
-const BASE_PATH = '../images/03_family';
+const BASE_PATH = '../../images/03_family';
 
 const PHOTOS = [
   /* BK — Morning */
@@ -187,6 +187,15 @@ const TIME_LABELS = { 'morning': 'Morning', 'afternoon': 'Afternoon' };
 
 function formatTime(time) { return TIME_LABELS[time] || time; }
 
+const LOCATION_LABELS = {
+  'BK':         'Brooklyn',
+  'CP':         'Central Park',
+  'Home':       'Home',
+  'State Park': 'State Park',
+};
+
+function formatLocation(loc) { return LOCATION_LABELS[loc] || loc; }
+
 
 /* ============================================================
    FILTER STATE
@@ -226,10 +235,10 @@ function compareKeys(a, b) {
 function formatKey(key) {
   if (filterLocation && filterTime) {
     const [loc, time] = key.split('||');
-    return `${loc}  —  ${formatTime(time)}`;
+    return `${formatLocation(loc)}  —  ${formatTime(time)}`;
   }
   if (filterTime) return formatTime(key);
-  return key;
+  return formatLocation(key);
 }
 
 
@@ -295,7 +304,7 @@ function renderGrid() {
 /* ============================================================
    FILTER BUTTONS
 ============================================================ */
-document.getElementById('btnLocation').addEventListener('click', function () {
+document.getElementById('btnPlace').addEventListener('click', function () {
   filterLocation = !filterLocation;
   this.classList.toggle('active', filterLocation);
   renderGrid();

@@ -111,14 +111,9 @@ body { font-family: var(--mono); overflow-x: hidden; }
 .filter-bar {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 24px;
   padding: 0 40px 28px;
-}
-.filter-label {
-  font-size: 0.58rem;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: var(--fg-dim);
 }
 .filter-btn {
   background: none;
@@ -127,7 +122,6 @@ body { font-family: var(--mono); overflow-x: hidden; }
   font-family: var(--mono);
   font-size: 0.62rem;
   letter-spacing: 0.18em;
-  text-transform: uppercase;
   color: var(--fg-dim);
   padding: 4px 0;
   position: relative;

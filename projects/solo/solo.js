@@ -22,7 +22,7 @@
                location "WB", time "afternoon(cloudy)".
                To swap projects: change BASE_PATH and PHOTOS.
 ============================================================ */
-const BASE_PATH = '../images/04_Solo';
+const BASE_PATH = '../../images/04_Solo';
 
 const PHOTOS = [
   /* BK — Afternoon */
@@ -291,6 +291,17 @@ const TIME_LABELS = {
 
 function formatTime(time) { return TIME_LABELS[time] || time; }
 
+const LOCATION_LABELS = {
+  'BK':    'Brooklyn',
+  'CP':    'Central Park',
+  'CS':    'CS',
+  'CU':    'Columbia University',
+  'Coney': 'Coney Island',
+  'WB':    'Williamsburg',
+};
+
+function formatLocation(loc) { return LOCATION_LABELS[loc] || loc; }
+
 
 /* ============================================================
    FILTER STATE
@@ -330,10 +341,10 @@ function compareKeys(a, b) {
 function formatKey(key) {
   if (filterLocation && filterTime) {
     const [loc, time] = key.split('||');
-    return `${loc}  —  ${formatTime(time)}`;
+    return `${formatLocation(loc)}  —  ${formatTime(time)}`;
   }
   if (filterTime) return formatTime(key);
-  return key;
+  return formatLocation(key);
 }
 
 
@@ -402,7 +413,7 @@ function renderGrid() {
 /* ============================================================
    FILTER BUTTONS
 ============================================================ */
-document.getElementById('btnLocation').addEventListener('click', function () {
+document.getElementById('btnPlace').addEventListener('click', function () {
   filterLocation = !filterLocation;
   this.classList.toggle('active', filterLocation);
   renderGrid();

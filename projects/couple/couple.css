@@ -1,24 +1,24 @@
-/* Same structure as couple.css — only colour variables differ.
-   Solo palette: dusty lavender. */
-
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --bg:      #ebe8f2;   /* dusty lavender */
-  --fg:      #111111;
-  --fg-dim:  rgba(17, 17, 17, 0.40);
-  --mono:    'Courier Prime', 'Courier New', Courier, monospace;
-  --nav-h:   80px;
-  --cols:    8;
-  --gap:     3px;
-  --cell-bg: transparent;
+  --bg:     #ffffff;
+  --fg:     #111111;
+  --fg-dim: rgba(17, 17, 17, 0.38);
+  --mono:   'Courier Prime', 'Courier New', Courier, monospace;
+  --nav-h:  80px;
+  --cols:   8;
+  --gap:    3px;
 }
 
 html { background: var(--bg); color: var(--fg); }
 body { font-family: var(--mono); overflow-x: hidden; }
 
 
-/* ── Intro overlay ─────────────────────────────────────────── */
+/* ── Intro title overlay ───────────────────────────────────────
+   Transparent background so the page shows through.
+   The title uses a chromatic-aberration / anaglyph effect
+   (overlapping red + blue ghost copies) for an old-film look.
+────────────────────────────────────────────────────────────── */
 #intro-overlay {
   position: fixed;
   inset: 0;
@@ -31,8 +31,20 @@ body { font-family: var(--mono); overflow-x: hidden; }
   opacity: 1;
   transition: opacity 1.2s ease;
 }
+
 #intro-overlay.fade-out { opacity: 0; }
 
+/*
+  Three text layers via pseudo-elements:
+    ::before  — red/magenta copy, offset left + down
+    main text — dark ink, centre
+    ::after   — cyan/blue copy, offset right + up
+
+  mix-blend-mode: multiply blends against the white page so the
+  colours deepen where they overlap, recreating the anaglyph look.
+  The film-load keyframe adds a brief stutter like old film
+  catching in a projector gate.
+*/
 #intro-title {
   position: relative;
   display: inline-block;
@@ -44,18 +56,33 @@ body { font-family: var(--mono); overflow-x: hidden; }
   text-align: center;
   animation: film-load 0.6s steps(1) forwards;
 }
+
 #intro-title::before,
 #intro-title::after {
   content: attr(data-text);
   position: absolute;
-  top: 0; left: 0;
+  top: 0;
+  left: 0;
   width: 100%;
   mix-blend-mode: multiply;
   pointer-events: none;
 }
-#intro-title::before { color: #5a1a8b; transform: translate(-6px,  4px); opacity: 0.72; } /* deep violet */
-#intro-title::after  { color: #1a2a8b; transform: translate( 6px, -4px); opacity: 0.72; } /* deep indigo */
 
+/* Red / magenta ghost — offset left & down */
+#intro-title::before {
+  color: #c8003a;
+  transform: translate(-6px, 4px);
+  opacity: 0.72;
+}
+
+/* Cyan / blue ghost — offset right & up */
+#intro-title::after {
+  color: #0040cc;
+  transform: translate(6px, -4px);
+  opacity: 0.72;
+}
+
+/* Old-projector gate-catch: brief stutter on first appear */
 @keyframes film-load {
   0%   { opacity: 0; transform: translateX(-3px); }
   15%  { opacity: 1; transform: translateX( 2px); }
@@ -77,14 +104,16 @@ body { font-family: var(--mono); overflow-x: hidden; }
   padding: 0 40px;
   z-index: 200;
   background: var(--bg);
-  border-bottom: 1px solid rgba(17, 17, 17, 0.10);
+  border-bottom: 1px solid rgba(17, 17, 17, 0.08);
 }
+
 .brand {
   font-size: 0.72rem;
   letter-spacing: 0.06em;
   color: var(--fg);
   text-decoration: none;
 }
+
 .back-link {
   font-size: 0.6rem;
   letter-spacing: 0.2em;
@@ -100,6 +129,7 @@ body { font-family: var(--mono); overflow-x: hidden; }
 .project-header {
   padding: calc(var(--nav-h) + 36px) 40px 32px;
 }
+
 .project-title {
   font-size: clamp(1rem, 2vw, 1.6rem);
   font-weight: 400;
@@ -111,15 +141,18 @@ body { font-family: var(--mono); overflow-x: hidden; }
 .filter-bar {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 24px;
   padding: 0 40px 28px;
 }
+
 .filter-label {
   font-size: 0.58rem;
   letter-spacing: 0.22em;
   text-transform: uppercase;
   color: var(--fg-dim);
 }
+
 .filter-btn {
   background: none;
   border: none;
@@ -127,36 +160,61 @@ body { font-family: var(--mono); overflow-x: hidden; }
   font-family: var(--mono);
   font-size: 0.62rem;
   letter-spacing: 0.18em;
-  text-transform: uppercase;
   color: var(--fg-dim);
   padding: 4px 0;
   position: relative;
   transition: color 0.2s;
 }
+
+/* Underline indicator — invisible by default */
 .filter-btn::after {
   content: '';
   position: absolute;
-  bottom: 0; left: 0; right: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
   height: 1px;
   background: var(--fg);
   transform: scaleX(0);
   transition: transform 0.2s ease;
 }
+
 .filter-btn:hover { color: var(--fg); }
-.filter-btn.active { color: var(--fg); }
-.filter-btn.active::after { transform: scaleX(1); }
+
+/* Active state: full-width underline + dark text */
+.filter-btn.active {
+  color: var(--fg);
+}
+.filter-btn.active::after {
+  transform: scaleX(1);
+}
 
 
 /* ── Photo grid ────────────────────────────────────────────── */
+/*
+  #photoGrid is a plain container — the CSS grid lives on
+  .group-grid so it works both when photos are flat and when
+  they're split into labelled groups.
+
+  Each cell is square. Photos use object-fit: contain so they
+  are never cropped:
+    • Landscape → fills full width, white top/bottom
+    • Portrait  → fills full height, white left/right
+*/
 #photoGrid {
   padding: 0 var(--gap) var(--gap);
 }
+
 .group-grid {
   display: grid;
   grid-template-columns: repeat(var(--cols), 1fr);
   gap: var(--gap);
 }
-.photo-group { margin-bottom: 48px; }
+
+.photo-group {
+  margin-bottom: 48px;
+}
+
 .group-label {
   font-family: var(--mono);
   font-weight: 400;
@@ -172,8 +230,9 @@ body { font-family: var(--mono); overflow-x: hidden; }
   aspect-ratio: 1 / 1;
   overflow: hidden;
   cursor: pointer;
-  background: var(--cell-bg);
+  background: transparent;
 }
+
 .grid-cell img {
   width: 100%;
   height: 100%;
@@ -182,6 +241,7 @@ body { font-family: var(--mono); overflow-x: hidden; }
   display: block;
   transition: opacity 0.25s;
 }
+
 .grid-cell:hover img { opacity: 0.80; }
 
 
@@ -198,46 +258,80 @@ body { font-family: var(--mono); overflow-x: hidden; }
   pointer-events: none;
   transition: opacity 0.28s ease;
 }
-#lightbox.active { opacity: 1; pointer-events: auto; }
-#lightbox img {
-  max-width: 90vw; max-height: 90vh;
-  object-fit: contain; display: block;
-  user-select: none; pointer-events: none;
+
+#lightbox.active {
+  opacity: 1;
+  pointer-events: auto;
 }
+
+#lightbox img {
+  max-width: 90vw;
+  max-height: 90vh;
+  object-fit: contain;
+  display: block;
+  user-select: none;
+  pointer-events: none; /* clicks fall through to the zone divs */
+}
+
+/* Left / right invisible hit zones */
 .lb-zone {
   position: absolute;
   top: 0; bottom: 0;
-  width: 50%; cursor: pointer; z-index: 1;
+  width: 50%;
+  cursor: pointer;
+  z-index: 1;
 }
 #lb-prev { left: 0; }
 #lb-next { right: 0; }
+
+/* Arrow hints */
 .lb-arrow {
   position: absolute;
-  top: 50%; transform: translateY(-50%);
+  top: 50%;
+  transform: translateY(-50%);
   font-size: 1.6rem;
-  color: rgba(255,255,255,0.22);
-  pointer-events: none; transition: color 0.2s; z-index: 2; line-height: 1;
+  color: rgba(255, 255, 255, 0.22);
+  pointer-events: none;
+  transition: color 0.2s;
+  z-index: 2;
+  line-height: 1;
 }
 #lb-arrow-left  { left: 22px; }
 #lb-arrow-right { right: 22px; }
+
 #lb-prev:hover ~ #lb-arrow-left,
-#lb-next:hover ~ #lb-arrow-right { color: rgba(255,255,255,0.65); }
+#lb-next:hover ~ #lb-arrow-right { color: rgba(255, 255, 255, 0.65); }
+
+/* Close button */
 #lb-close {
   position: absolute;
-  top: 24px; right: 28px; z-index: 2;
-  background: none; border: none;
-  color: rgba(255,255,255,0.55);
-  font-family: var(--mono); font-size: 0.65rem;
-  letter-spacing: 0.2em; text-transform: uppercase;
-  cursor: pointer; padding: 8px 12px; transition: color 0.2s;
+  top: 24px; right: 28px;
+  z-index: 2;
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.55);
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  cursor: pointer;
+  padding: 8px 12px;
+  transition: color 0.2s;
 }
 #lb-close:hover { color: #fff; }
+
+/* Photo counter */
 #lb-counter {
   position: absolute;
-  bottom: 22px; left: 50%; transform: translateX(-50%);
-  font-size: 0.6rem; letter-spacing: 0.2em;
-  color: rgba(255,255,255,0.38);
-  pointer-events: none; z-index: 2; white-space: nowrap;
+  bottom: 22px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  color: rgba(255, 255, 255, 0.38);
+  pointer-events: none;
+  z-index: 2;
+  white-space: nowrap;
 }
 
 
@@ -248,4 +342,5 @@ body { font-family: var(--mono); overflow-x: hidden; }
   .project-nav    { padding: 0 24px; }
   .project-header { padding: calc(var(--nav-h) + 20px) 24px 20px; }
   .filter-bar     { padding: 0 24px 20px; }
+  #photoGrid      { padding: 0 var(--gap) var(--gap); }
 }
