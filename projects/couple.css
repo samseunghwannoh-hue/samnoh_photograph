@@ -137,18 +137,92 @@ body { font-family: var(--mono); overflow-x: hidden; }
 }
 
 
+/* ── Filter bar ────────────────────────────────────────────── */
+.filter-bar {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding: 0 40px 28px;
+}
+
+.filter-label {
+  font-size: 0.58rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--fg-dim);
+}
+
+.filter-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--fg-dim);
+  padding: 4px 0;
+  position: relative;
+  transition: color 0.2s;
+}
+
+/* Underline indicator — invisible by default */
+.filter-btn::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--fg);
+  transform: scaleX(0);
+  transition: transform 0.2s ease;
+}
+
+.filter-btn:hover { color: var(--fg); }
+
+/* Active state: full-width underline + dark text */
+.filter-btn.active {
+  color: var(--fg);
+}
+.filter-btn.active::after {
+  transform: scaleX(1);
+}
+
+
 /* ── Photo grid ────────────────────────────────────────────── */
 /*
-  Each cell is square. Photos are shown with object-fit: contain
-  so they are never cropped:
-    • Landscape → fills full width, shorter height, white top/bottom
-    • Portrait  → fills full height, narrower width, white left/right
+  #photoGrid is a plain container — the CSS grid lives on
+  .group-grid so it works both when photos are flat and when
+  they're split into labelled groups.
+
+  Each cell is square. Photos use object-fit: contain so they
+  are never cropped:
+    • Landscape → fills full width, white top/bottom
+    • Portrait  → fills full height, white left/right
 */
-.photo-grid {
+#photoGrid {
+  padding: 0 var(--gap) var(--gap);
+}
+
+.group-grid {
   display: grid;
   grid-template-columns: repeat(var(--cols), 1fr);
   gap: var(--gap);
-  padding: 0 var(--gap) var(--gap);
+}
+
+.photo-group {
+  margin-bottom: 48px;
+}
+
+.group-label {
+  font-family: var(--mono);
+  font-weight: 400;
+  font-size: 0.62rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--fg);
+  padding: 0 4px 14px;
 }
 
 .grid-cell {
@@ -267,4 +341,6 @@ body { font-family: var(--mono); overflow-x: hidden; }
 @media (max-width: 600px) {
   .project-nav    { padding: 0 24px; }
   .project-header { padding: calc(var(--nav-h) + 20px) 24px 20px; }
+  .filter-bar     { padding: 0 24px 20px; }
+  #photoGrid      { padding: 0 var(--gap) var(--gap); }
 }
