@@ -230,7 +230,7 @@ body { font-family: var(--mono); overflow-x: hidden; }
   aspect-ratio: 1 / 1;
   overflow: hidden;
   cursor: pointer;
-  background: #f8f8f8; /* shows behind letter/pillar-box areas */
+  background: transparent;
 }
 
 .grid-cell img {

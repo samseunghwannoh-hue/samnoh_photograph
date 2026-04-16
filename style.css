@@ -243,6 +243,7 @@ section.section--video .vignette {
    in a centred or offset frame box.                        */
 section.section--framed,
 section.section--framed-right,
+section.section--framed-left,
 section.section--sized {
   height: 100vh;
   align-items: center;
@@ -253,6 +254,12 @@ section.section--sized {
 section.section--framed-right {
   justify-content: flex-end;
   padding-right: 8%;
+}
+
+/* Left-offset: push frame toward the left edge */
+section.section--framed-left {
+  justify-content: flex-start;
+  padding-left: 8%;
 }
 
 /*
@@ -282,6 +289,7 @@ section.section--framed-right {
    Override per-project with inline style on the .frame element  */
 section.section--framed       .frame { width: 64%; aspect-ratio: 4/3; }
 section.section--framed-right .frame { width: 55%; aspect-ratio: 4/3; }
+section.section--framed-left  .frame { width: 55%; aspect-ratio: 4/3; }
 section.section--sized        .frame { width: 36%; aspect-ratio: 2/3; }
 
 /* ── Mobile ───────────────────────────────────────────────── */
