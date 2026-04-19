@@ -292,7 +292,7 @@ function formatTime(time) {
 const LOCATION_LABELS = {
   'BK':   'Brooklyn',
   'CP':   'Central Park',
-  'CS':   'CS',
+  'CS':   'City Hall',
   'City': 'Midtown',
   'GV':   'Greenwich Village',
 };
