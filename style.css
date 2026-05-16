@@ -214,9 +214,9 @@ section.section--video .bg-video {
   position: absolute;
   top: -10%;
   left: 0;
-  width: 100vw;
-  /*height: 100%;*/
-  object-fit: cover;
+  width: 100%;
+  height: 120%;   /* 10% overscan top + bottom — keeps parallax gap-free  */
+  object-fit: cover; /* centres video content within the overscan box */
   will-change: transform;
   backface-visibility: hidden;
   transform: translate3d(0, 0, 0);
