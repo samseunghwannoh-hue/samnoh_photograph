@@ -1,12 +1,12 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --bg:     #ffffff;
+  --bg:     #F3EADC;
   --fg:     #111111;
   --fg-dim: rgba(17, 17, 17, 0.38);
   --mono:   'Courier Prime', 'Courier New', Courier, monospace;
   --nav-h:  80px;
-  --cols:   8;
+  --cols:   16;
   --gap:    3px;
 }
 
@@ -244,6 +244,11 @@ body { font-family: var(--mono); overflow-x: hidden; }
 
 .grid-cell:hover img { opacity: 0.80; }
 
+.grid-cell--empty {
+  cursor: default;
+  pointer-events: none;
+}
+
 
 /* ── Lightbox ──────────────────────────────────────────────── */
 #lightbox {
@@ -336,8 +341,8 @@ body { font-family: var(--mono); overflow-x: hidden; }
 
 
 /* ── Mobile ────────────────────────────────────────────────── */
-@media (max-width: 900px) { :root { --cols: 4; } }
-@media (max-width: 500px) { :root { --cols: 2; } }
+@media (max-width: 900px) { :root { --cols: 8; } }
+@media (max-width: 500px) { :root { --cols: 4; } }
 @media (max-width: 600px) {
   .project-nav    { padding: 0 24px; }
   .project-header { padding: calc(var(--nav-h) + 20px) 24px 20px; }

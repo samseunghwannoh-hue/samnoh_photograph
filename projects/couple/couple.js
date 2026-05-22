@@ -354,6 +354,12 @@ function formatKey(key) {
 ============================================================ */
 const grid = document.getElementById('photoGrid');
 
+function createEmptyCell() {
+  const cell = document.createElement('div');
+  cell.className = 'grid-cell grid-cell--empty';
+  return cell;
+}
+
 function createCell(photo, displayIdx) {
   const src  = encodeURI(`${BASE_PATH}/${photo.path}`);
   const cell = document.createElement('div');
@@ -382,10 +388,16 @@ function renderGrid() {
     // No active filter: single flat grid in PHOTOS array order
     const groupGrid = document.createElement('div');
     groupGrid.className = 'group-grid';
+    let rowCount = 0;
     PHOTO_DATA.forEach(photo => {
       const idx = displayPhotos.length;
       displayPhotos.push(photo);
       groupGrid.appendChild(createCell(photo, idx));
+      groupGrid.appendChild(createEmptyCell());
+      rowCount++;
+      if (rowCount % 8 === 0) {
+        for (let i = 0; i < 16; i++) groupGrid.appendChild(createEmptyCell());
+      }
     });
     grid.appendChild(groupGrid);
     return;
@@ -406,10 +418,16 @@ function renderGrid() {
     const groupGrid = document.createElement('div');
     groupGrid.className = 'group-grid';
 
+    let rowCount = 0;
     groups[key].forEach(photo => {
       const idx = displayPhotos.length;
       displayPhotos.push(photo);
       groupGrid.appendChild(createCell(photo, idx));
+      groupGrid.appendChild(createEmptyCell());
+      rowCount++;
+      if (rowCount % 8 === 0) {
+        for (let i = 0; i < 16; i++) groupGrid.appendChild(createEmptyCell());
+      }
     });
 
     groupEl.appendChild(groupGrid);

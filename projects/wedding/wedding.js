@@ -143,6 +143,12 @@ const GROUPS = [
 const grid        = document.getElementById('photoGrid');
 let   displayPhotos = []; // flat ordered list for lightbox navigation
 
+function createEmptyCell() {
+  const cell = document.createElement('div');
+  cell.className = 'grid-cell grid-cell--empty';
+  return cell;
+}
+
 function createCell(src, label, displayIdx) {
   const cell = document.createElement('div');
   cell.className = 'grid-cell';
@@ -178,11 +184,17 @@ function renderGrid() {
     const groupGrid = document.createElement('div');
     groupGrid.className = 'group-grid';
 
+    let rowCount = 0;
     group.photos.forEach(filename => {
       const src = `${BASE_PATH}/${group.basePath}/${filename}`;
       const idx = displayPhotos.length;
       displayPhotos.push({ src, label: group.label });
       groupGrid.appendChild(createCell(src, group.label, idx));
+      groupGrid.appendChild(createEmptyCell());
+      rowCount++;
+      if (rowCount % 8 === 0) {
+        for (let i = 0; i < 16; i++) groupGrid.appendChild(createEmptyCell());
+      }
     });
 
     groupEl.appendChild(groupGrid);

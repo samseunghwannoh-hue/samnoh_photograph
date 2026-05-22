@@ -223,6 +223,35 @@ section.section--video .bg-video {
   display: block;
 }
 
+/* ── Video section: title block ────────────────────────────── */
+.video-title-block {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  pointer-events: none;
+  line-height: 1.55;
+  text-align: center;
+}
+
+.video-title-main {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-weight: 800;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--fg);
+}
+
+.video-title-sub {
+  font-family: 'Times New Roman', 'Georgia', serif;
+  font-weight: 200;
+  font-style: italic;
+  font-size: 13px;
+  color: var(--fg);
+}
+
 /* Vignette gradient for video sections (normally on .bg::after) */
 section.section--video .vignette {
   position: absolute;
@@ -294,7 +323,7 @@ section.section--sized        .frame { width: 36%; aspect-ratio: 2/3; }
 
 /* ── Mobile ───────────────────────────────────────────────── */
 @media (max-width: 600px) {
-  nav           { padding: 24px; }
-  .info         { padding: 0 24px 38px; }
-  #fixed-label  { bottom: 32px; left: 24px; }
+  nav                  { padding: 24px; }
+  .info                { padding: 0 24px 38px; }
+  #fixed-label         { bottom: 32px; left: 24px; }
 }
