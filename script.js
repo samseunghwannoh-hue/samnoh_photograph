@@ -52,6 +52,16 @@ function positionSectionLabels() {
     const sTop    = sectionTops[i];
     const sHeight = sectionEls[i].offsetHeight;
     label.style.top = (sTop + sHeight * 0.5) + 'px';
+
+    // Centre the label on the photo's actual horizontal midpoint.
+    // getBoundingClientRect().left is unaffected by vertical parallax
+    // (parallax only shifts Y), so this stays accurate while scrolling.
+    const frame = parallaxEls[i];
+    if (frame) {
+      const rect    = frame.getBoundingClientRect();
+      const centerX = rect.left + rect.width * 0.5 + window.scrollX;
+      label.style.left = centerX + 'px';
+    }
   });
 }
 
