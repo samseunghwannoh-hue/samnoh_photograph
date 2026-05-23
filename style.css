@@ -160,13 +160,28 @@ section.section--hero .title {
   color: var(--fg);
 }
 
-/* ── Fixed title label — sections 2+ ─────────────────────── */
-#fixed-label {
-  position: fixed;
-  bottom: 44px;
+/* ── Fixed title label — replaced by per-section labels ───── */
+#fixed-label { display: none; }
+
+/* ── Per-section title label ───────────────────────────────── */
+.section-label {
+  /* top/left set by JS — appended to <body>, not inside section */
+  position: absolute;
   left: 44px;
-  z-index: 30;
+  z-index: 50;
+  font-family: var(--mono);
+  font-weight: 400;
+  font-size: clamp(1.1rem, 2.2vw, 1.8rem);
+  letter-spacing: 0.02em;
+  color: #111111;
   pointer-events: none;
+  will-change: transform;
+  backface-visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+.section-label.visible {
+  opacity: 1;
 }
 
 /*
@@ -229,10 +244,11 @@ section.section--video .bg-video {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  z-index: 10;
+  z-index: 900;
   pointer-events: none;
   line-height: 1.55;
   text-align: center;
+  transition: opacity 0.4s ease;
 }
 
 .video-title-main {
@@ -326,4 +342,15 @@ section.section--sized        .frame { width: 36%; aspect-ratio: 2/3; }
   nav                  { padding: 24px; }
   .info                { padding: 0 24px 38px; }
   #fixed-label         { bottom: 32px; left: 24px; }
+}
+
+/* ── Page transition overlay ───────────────────────────────── */
+#page-transition {
+  position: fixed;
+  inset: 0;
+  background: #000;
+  z-index: 9999;
+  opacity: 1;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
 }

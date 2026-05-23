@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <div id="page-transition"></div>
 
 
   <!-- Fixed title shown for sections 2+ -->
@@ -48,7 +49,7 @@
   <!-- ── Section 3: Solo — landscape, centred, 110vh ──────── -->
   <section class="section--framed" data-title="solo" style="background: #E9EFEC; height: 110vh;">
     <a href="projects/solo/solo.html" class="section-link" aria-label="Solo"></a>
-    <div class="frame" style="height: calc(100% - 32px); width: calc(100% - 32px);">
+    <div class="frame" style="height: calc((100% - 32px) * 0.6); width: calc((100% - 32px) * 0.6);">
       <img src="./images/04_Solo/Brooklyn_morning/1-11.jpg" alt="Solo" style="object-fit: cover; object-position: center center;" />
     </div>
   </section>
@@ -101,5 +102,6 @@
   </section>
 -->
   <script src="script.js"></script>
+  <script src="transition.js"></script>
 </body>
 </html>

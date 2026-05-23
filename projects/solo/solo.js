@@ -295,7 +295,9 @@ function renderGrid() {
       groupGrid.appendChild(createEmptyCell());
       rowCount++;
       if (rowCount % 8 === 0) {
-        for (let i = 0; i < 16; i++) groupGrid.appendChild(createEmptyCell());
+        const rs = document.createElement('div');
+        rs.className = 'grid-row-spacer';
+        groupGrid.appendChild(rs);
       }
     });
     grid.appendChild(groupGrid);
@@ -322,7 +324,9 @@ function renderGrid() {
       groupGrid.appendChild(createEmptyCell());
       rowCount++;
       if (rowCount % 8 === 0) {
-        for (let i = 0; i < 16; i++) groupGrid.appendChild(createEmptyCell());
+        const rs = document.createElement('div');
+        rs.className = 'grid-row-spacer';
+        groupGrid.appendChild(rs);
       }
     });
     groupEl.appendChild(groupGrid);
