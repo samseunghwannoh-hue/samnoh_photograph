@@ -63,13 +63,8 @@ section::after {
   position: absolute;
   inset: 0;
   background: transparent;
-  transition: background 0.5s;
   z-index: 2;
   pointer-events: none;
-}
-
-section:hover::after {
-  background: rgba(0, 0, 0, 0.07);
 }
 
 /* ── Background image ─────────────────────────────────────── */
@@ -165,51 +160,22 @@ section.section--hero .title {
 
 /* ── Per-section title label ───────────────────────────────── */
 .section-label {
-  /* top/left set by JS — appended to <body>, not inside section */
+  /* top set by JS to section centre (page coords); left 50% + translateX(-50%) centres horizontally */
   position: absolute;
-  left: 44px;
+  left: 50%;
   z-index: 50;
   font-family: var(--mono);
   font-weight: 400;
   font-size: clamp(1.1rem, 2.2vw, 1.8rem);
   letter-spacing: 0.02em;
-  color: #111111;
+  color: var(--fg);
+  text-align: center;
+  text-shadow: 0 1px 20px rgba(0, 0, 0, 0.55);
   pointer-events: none;
   will-change: transform;
   backface-visibility: hidden;
+  /* opacity driven by JS scroll calculation — no CSS transition needed */
   opacity: 0;
-  transition: opacity 0.4s ease;
-}
-.section-label.visible {
-  opacity: 1;
-}
-
-/*
-  Two-state transition:
-    default  → opacity 0, shifted 12px down  (hidden / fading out)
-    .visible → opacity 1, at rest             (fading in)
-  Fade-in:  text slides up   as opacity rises.
-  Fade-out: text slides down as opacity falls.
-*/
-.label-text {
-  display: block;
-  font-family: var(--mono);
-  font-weight: 400;
-  font-size: clamp(1.1rem, 2.2vw, 1.8rem);
-  line-height: 1.2;
-  letter-spacing: 0.02em;
-  color: var(--fg);
-  /* Keeps text legible over both dark and light section backgrounds */
-  text-shadow: 0 1px 16px rgba(0, 0, 0, 0.35);
-
-  opacity: 0;
-  transform: translateY(12px);
-  transition: opacity 0.4s ease, transform 0.4s ease;
-}
-
-.label-text.visible {
-  opacity: 1;
-  transform: translateY(0);
 }
 
 /* ══════════════════════════════════════════════════════════
