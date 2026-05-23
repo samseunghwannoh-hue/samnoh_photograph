@@ -48,14 +48,12 @@ section {
   align-items: flex-end;
 }
 
-/* ── Section link — full-coverage click target ────────────── */
-/* z-index 20: sits above .info (11) so the entire section    */
-/* area is clickable, not just the parts outside the title.   */
-.section-link {
-  position: absolute;
-  inset: 0;
-  z-index: 20;
-  display: block;
+/* ── Frame link — click target is the photo only ──────────── */
+/* display: contents removes the <a> box from layout so the   */
+/* .frame inside is positioned exactly as before, but clicks  */
+/* on the frame area navigate to the project page.            */
+.frame-link {
+  display: contents;
 }
 
 section::after {
@@ -294,6 +292,15 @@ section.section--framed-left {
   height: 100%;
   object-fit: cover;
   display: block;
+  transition: transform 0.4s ease;
+}
+
+.frame-link:hover .frame img {
+  transform: scale(1.05);
+}
+
+.frame-link .frame {
+  cursor: pointer;
 }
 
 /* Default frame sizes per variant
