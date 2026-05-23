@@ -113,7 +113,7 @@ body { font-family: var(--mono); overflow-x: hidden; }
 
 /* ── Photo grid ────────────────────────────────────────────── */
 #photoGrid {
-  padding: 0 var(--gap) var(--gap);
+  padding: calc(var(--nav-h) + 36px) var(--gap) var(--gap);
 }
 
 .group-grid {
@@ -129,7 +129,7 @@ body { font-family: var(--mono); overflow-x: hidden; }
 .group-label {
   font-family: var(--mono);
   font-weight: 400;
-  font-size: 0.62rem;
+  font-size: 0.9rem;
   letter-spacing: 0.22em;
   text-transform: uppercase;
   color: var(--fg);
