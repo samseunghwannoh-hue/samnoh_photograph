@@ -130,9 +130,14 @@ function updateVideoTitle(scrollY) {
   const sTop    = sectionTops[videoSectionIdx];
   const sHeight = sectionEls[videoSectionIdx].offsetHeight;
 
-  const gone = scrollY >= sTop + sHeight;
-  videoTitleBlock.style.opacity = gone ? '0' : '1';
-  if (gone) return;
+  // Match the video photo's fade: last 40 % of section scroll travel
+  const fadeStart = sTop + sHeight * 0.6;
+  const fadeEnd   = sTop + sHeight;
+  const opacity   = scrollY <= fadeStart ? 1
+                  : scrollY >= fadeEnd   ? 0
+                  : 1 - (scrollY - fadeStart) / (fadeEnd - fadeStart);
+  videoTitleBlock.style.opacity = opacity;
+  if (scrollY >= fadeEnd) return;
 
   const offset         = (scrollY - sTop) * K;
   const naturalCenterY = (sTop - scrollY) + sHeight * 0.5 + offset;
