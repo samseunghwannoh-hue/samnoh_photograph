@@ -4,7 +4,7 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --bg:      #E9EFEC;   /* soft sage */
+  --bg:      #E4F0D5;
   --fg:      #111111;
   --fg-dim:  rgba(17, 17, 17, 0.40);
   --mono:    'Courier Prime', 'Courier New', Courier, monospace;
@@ -72,7 +72,7 @@ body { font-family: var(--mono); overflow-x: hidden; }
   justify-content: space-between;
   padding: 0 40px;
   z-index: 200;
-  background: linear-gradient(to bottom, rgba(233,239,236,1) 0%, rgba(233,239,236,0.5) 50%, transparent 100%);
+  background: linear-gradient(to bottom, rgba(228,240,213,1) 0%, rgba(228,240,213,0.5) 50%, transparent 100%);
 }
 .brand {
   font-size: 0.72rem;
