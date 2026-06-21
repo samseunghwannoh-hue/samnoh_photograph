@@ -4,14 +4,15 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --bg:      #E4F0D5;
-  --fg:      #111111;
-  --fg-dim:  rgba(17, 17, 17, 0.40);
-  --mono:    'Courier Prime', 'Courier New', Courier, monospace;
-  --nav-h:   80px;
-  --cols:    16;
-  --gap:     3px;
-  --cell-bg: transparent;
+  --bg:       #E4F0D5;
+  --fg:       #111111;
+  --fg-dim:   rgba(17, 17, 17, 0.40);
+  --mono:     'Courier Prime', 'Courier New', Courier, monospace;
+  --nav-h:    110px;
+  --filter-h: 88px;
+  --cols:     16;
+  --gap:      3px;
+  --cell-bg:  transparent;
 }
 
 html { background: var(--bg); color: var(--fg); }
@@ -24,8 +25,8 @@ body { font-family: var(--mono); overflow-x: hidden; }
   inset: 0;
   z-index: 999;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
   background: transparent;
   pointer-events: none;
   opacity: 1;
@@ -68,19 +69,46 @@ body { font-family: var(--mono); overflow-x: hidden; }
   top: 0; left: 0; right: 0;
   height: var(--nav-h);
   display: flex;
-  align-items: center;
+  flex-direction: row;
+  align-items: flex-start;
   justify-content: space-between;
-  padding: 0 40px;
+  padding: 28px 40px 0;
   z-index: 200;
   background: linear-gradient(to bottom, rgba(228,240,213,1) 0%, rgba(228,240,213,0.5) 50%, transparent 100%);
 }
 .brand {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-weight: 800;
   font-size: 0.72rem;
   letter-spacing: 0.06em;
+  text-transform: uppercase;
   color: var(--fg);
   text-decoration: none;
 }
+.nav-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+}
+.project-nav-links {
+  display: flex;
+  gap: 24px;
+}
+.project-nav-link {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-weight: 800;
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--fg-dim);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.project-nav-link:hover { color: var(--fg); }
 .back-link {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-weight: 800;
   font-size: 0.6rem;
   letter-spacing: 0.2em;
   text-transform: uppercase;
@@ -104,19 +132,36 @@ body { font-family: var(--mono); overflow-x: hidden; }
 
 /* ── Filter bar ────────────────────────────────────────────── */
 .filter-bar {
+  position: fixed;
+  top: var(--nav-h);
+  left: 0;
+  right: 0;
+  height: var(--filter-h);
+  z-index: 150;
+  background: transparent;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 8px;
+  padding: 0 40px;
+}
+
+.filter-row {
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 24px;
-  padding: calc(var(--nav-h) + 36px) 40px 28px;
+  gap: 20px;
 }
+
 .filter-btn {
   background: none;
   border: none;
   cursor: pointer;
-  font-family: var(--mono);
+  font-family: 'Times New Roman', 'Georgia', serif;
+  font-weight: 200;
+  font-style: italic;
   font-size: 0.9rem;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.06em;
   color: var(--fg-dim);
   padding: 4px 0;
   position: relative;
@@ -140,19 +185,18 @@ body { font-family: var(--mono); overflow-x: hidden; }
 .filter-sub {
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 24px;
-  padding: 0 40px 20px;
+  gap: 20px;
   flex-wrap: wrap;
-  min-height: 0;
 }
 .filter-sub-btn {
   background: none;
   border: none;
   cursor: pointer;
-  font-family: var(--mono);
+  font-family: 'Times New Roman', 'Georgia', serif;
+  font-weight: 200;
+  font-style: italic;
   font-size: 0.72rem;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.06em;
   color: var(--fg-dim);
   padding: 2px 0;
   transition: color 0.2s;
@@ -168,7 +212,7 @@ body { font-family: var(--mono); overflow-x: hidden; }
 
 /* ── Photo grid ────────────────────────────────────────────── */
 #photoGrid {
-  padding: 0 var(--gap) var(--gap);
+  padding: calc(var(--nav-h) + var(--filter-h) + 16px) var(--gap) var(--gap);
 }
 .group-grid {
   display: grid;
@@ -211,8 +255,8 @@ body { font-family: var(--mono); overflow-x: hidden; }
   z-index: 500;
   background: rgba(0, 0, 0, 0.92);
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.28s ease;

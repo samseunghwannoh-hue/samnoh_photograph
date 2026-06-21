@@ -20,16 +20,26 @@
   <!-- ── Nav ─────────────────────────────────────────────── -->
   <nav class="project-nav">
     <a href="../../index.html" class="brand">Sam Noh</a>
-    <a href="../../index.html" class="back-link">← Back</a>
+    <div class="nav-right">
+      <div class="project-nav-links">
+        <a href="../../work.html" class="project-nav-link">Work</a>
+        <a href="../../contact.html" class="project-nav-link">Contact</a>
+      </div>
+      <a href="../../index.html" class="back-link">← Back</a>
+    </div>
   </nav>
 
   <!-- ── Filter bar ────────────────────────────────────────── -->
   <div class="filter-bar">
-    <button class="filter-btn" id="btnTime">time</button>
-    <button class="filter-btn" id="btnPlace">place</button>
+    <div class="filter-row">
+      <button class="filter-btn" id="btnTime">time</button>
+      <div class="filter-sub" id="filterSubTime"></div>
+    </div>
+    <div class="filter-row">
+      <button class="filter-btn" id="btnPlace">place</button>
+      <div class="filter-sub" id="filterSubPlace"></div>
+    </div>
   </div>
-  <div class="filter-sub" id="filterSubTime"></div>
-  <div class="filter-sub" id="filterSubPlace"></div>
 
   <!-- ── Photo grid (populated by couple.js) ──────────────── -->
   <div id="photoGrid"></div>

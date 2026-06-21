@@ -20,6 +20,9 @@ const sectionEls  = Array.from(document.querySelectorAll('section'));
 const parallaxEls = sectionEls.map(s => s.querySelector('.bg, .bg-video, .frame'));
 let   sectionTops = sectionEls.map(s => s.offsetTop);
 
+/* ── Nav reference ────────────────────────────────────────── */
+const navEl = document.querySelector('nav');
+
 /* ── Video title ──────────────────────────────────────────── */
 const videoTitleBlock = document.querySelector('.video-title-block');
 const videoSectionIdx = sectionEls.findIndex(s => s.querySelector('.bg-video'));
@@ -158,6 +161,16 @@ function updateVideoTitle(scrollY) {
   videoTitleBlock.style.transform = `translate(-50%, calc(-50% + ${useOffset}px))`;
 }
 
+/* ── Nav colour: white on dark, dark on light ─────────────── */
+function updateNavColor(scrollY) {
+  if (!navEl) return;
+  // The first section is the dark video. Once the nav reaches
+  // the top of the second section (first light section), switch to dark.
+  const lightStart = sectionTops[1] ?? Infinity;
+  navEl.classList.toggle('nav--dark', scrollY >= lightStart - 80);
+}
+
+
 /* ── Tick loop ────────────────────────────────────────────── */
 function tick() {
   const realScroll = window.scrollY;
@@ -181,6 +194,7 @@ function tick() {
   applyParallax(virtualScroll);
   updateVideoTitle(virtualScroll);
   updateSectionLabels(virtualScroll);
+  updateNavColor(virtualScroll);
   requestAnimationFrame(tick);
 }
 
@@ -194,4 +208,5 @@ positionSectionLabels();
 applyParallax(window.scrollY);
 updateVideoTitle(window.scrollY);
 updateSectionLabels(window.scrollY);
+updateNavColor(window.scrollY);
 requestAnimationFrame(tick);

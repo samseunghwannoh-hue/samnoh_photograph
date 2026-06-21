@@ -8,7 +8,7 @@
   --fg:      #111111;
   --fg-dim:  rgba(17, 17, 17, 0.40);
   --mono:    'Courier Prime', 'Courier New', Courier, monospace;
-  --nav-h:   80px;
+  --nav-h:   110px;
   --cols:    16;
   --gap:     3px;
   --cell-bg: transparent;
@@ -73,21 +73,48 @@ body { font-family: var(--mono); overflow-x: hidden; }
   top: 0; left: 0; right: 0;
   height: var(--nav-h);
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
-  padding: 0 40px;
+  padding: 28px 40px 0;
   z-index: 200;
   background: linear-gradient(to bottom, rgba(242,232,220,1) 0%, rgba(242,232,220,0.5) 50%, transparent 100%);
 }
 
 .brand {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-weight: 800;
   font-size: 0.72rem;
   letter-spacing: 0.06em;
+  text-transform: uppercase;
   color: var(--fg);
   text-decoration: none;
 }
 
+.nav-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+}
+.project-nav-links {
+  display: flex;
+  gap: 24px;
+}
+.project-nav-link {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-weight: 800;
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--fg-dim);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.project-nav-link:hover { color: var(--fg); }
+
 .back-link {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-weight: 800;
   font-size: 0.6rem;
   letter-spacing: 0.2em;
   text-transform: uppercase;
