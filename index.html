@@ -33,7 +33,7 @@
     <div class="video-title-block">
       <div class="video-title-main">SAM NOH</div>
       <div class="video-title-sub">Photographer</div>
-      <div class="video-title-sub">Queens, LIC &mdash; 07:30</div>
+      <div class="video-title-sub">Queens, LIC &mdash; <span id="lic-time">07:30</span></div>
       <div class="video-title-sub">After hours in motion.</div>
     </div>
   </section> 
@@ -125,6 +125,23 @@
 -->
   <footer class="site-credit">Inspired by <a href="https://www.jonathangrado.com/" target="_blank" rel="noopener noreferrer">Jonathan Grado's website</a></footer>
 
+  <script>
+    (function () {
+      function updateLICTime() {
+        var now = new Date();
+        var timeStr = now.toLocaleTimeString('en-US', {
+          timeZone: 'America/New_York',
+          hour: '2-digit',
+          minute: '2-digit',
+          hour12: false
+        });
+        var el = document.getElementById('lic-time');
+        if (el) el.textContent = timeStr;
+      }
+      updateLICTime();
+      setInterval(updateLICTime, 1000);
+    })();
+  </script>
   <script src="script.js"></script>
   <script src="transition.js"></script>
   <script>
