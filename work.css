@@ -80,13 +80,25 @@ nav {
   inset: 0;
   background-size: cover;
   background-position: center;
-  transition: transform 0.7s ease, filter 0.7s ease;
-  filter: brightness(0.62);
+  transition: transform 0.7s ease;
 }
 
 .work-cell:hover .work-cell__bg {
   transform: scale(1.04);
-  filter: brightness(0.80);
+}
+
+/* Dark overlay for label readability — keeps photo at original color */
+.work-cell::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.38);
+  transition: background 0.7s ease;
+  pointer-events: none;
+}
+
+.work-cell:hover::after {
+  background: rgba(0, 0, 0, 0.18);
 }
 
 /* Label */

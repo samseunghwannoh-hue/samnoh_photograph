@@ -61,15 +61,15 @@ nav {
 /* ── Photo wrapper ─────────────────────────────────────────── */
 .contact-photo-wrap {
   position: relative;
-  margin: 100px auto 0;
-  width: fit-content;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
 }
 
 .contact-photo {
   display: block;
+  height: 100%;
   width: auto;
-  max-width: calc(100vw - 160px);
-  max-height: calc(100vh - 160px);
 }
 
 /* ── Content (overlaid on photo) ───────────────────────────── */
