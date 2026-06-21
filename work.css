@@ -61,7 +61,7 @@ nav {
 /* ── Work grid ─────────────────────────────────────────────── */
 .work-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 16px;
   padding: 100px 48px 48px;
   min-height: 100vh;
@@ -92,9 +92,10 @@ nav {
 /* Label */
 .work-cell__label {
   position: absolute;
-  bottom: 28px;
-  left: 0;
-  right: 0;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   text-align: center;
   font-family: 'Times New Roman', 'Georgia', serif;
   font-weight: 200;
@@ -117,7 +118,7 @@ nav {
   html, body { overflow: auto; }
 
   .work-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
     padding: 80px 24px 32px;
     gap: 12px;
   }
@@ -125,6 +126,20 @@ nav {
   nav { padding: 24px; }
 }
 
+
+/* ── Site credit ───────────────────────────────────────────── */
+.site-credit {
+  text-align: left;
+  padding: 40px 20px 40px 40px;
+  font-family: 'Times New Roman', 'Georgia', serif;
+  font-weight: 200;
+  font-style: italic;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  color: var(--fg);
+  opacity: 0.45;
+}
+.site-credit a { color: inherit; text-decoration: underline; text-underline-offset: 3px; }
 
 /* ── Page transition overlay ───────────────────────────────── */
 #page-transition {

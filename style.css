@@ -164,7 +164,8 @@ section.section--hero .info {
   left: 50%;
   transform: translate(-50%, -50%);
   padding: 0;
-  text-align: center;
+  text-align: left;
+  padding-left: 40px;
   z-index: 11;
   width: 100%;
 }
@@ -203,7 +204,8 @@ section.section--hero .title {
   font-size: clamp(2.8rem, 6vw, 5.5rem);
   letter-spacing: 0.01em;
   color: var(--fg);
-  text-align: center;
+  text-align: left;
+  padding-left: 40px;
   text-shadow: 0 1px 20px rgba(0, 0, 0, 0.55);
   pointer-events: none;
   will-change: transform;
@@ -247,7 +249,8 @@ section.section--video .bg-video {
   z-index: 900;
   pointer-events: none;
   line-height: 1.55;
-  text-align: center;
+  text-align: left;
+  padding-left: 40px;
   transition: opacity 0.4s ease;
 }
 
@@ -348,6 +351,20 @@ section.section--sized        .frame { width: 36%; aspect-ratio: 2/3; }
   .info                { padding: 0 24px 38px; }
   #fixed-label         { bottom: 32px; left: 24px; }
 }
+
+/* ── Site credit ───────────────────────────────────────────── */
+.site-credit {
+  text-align: left;
+  padding: 40px 20px 40px 40px;
+  font-family: 'Times New Roman', 'Georgia', serif;
+  font-weight: 200;
+  font-style: italic;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  color: var(--fg);
+  opacity: 0.45;
+}
+.site-credit a { color: inherit; text-decoration: underline; text-underline-offset: 3px; }
 
 /* ── Page transition overlay ───────────────────────────────── */
 #page-transition {

@@ -27,6 +27,7 @@ body { font-family: var(--mono); overflow-x: hidden; }
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   background: transparent;
   pointer-events: none;
   opacity: 1;
@@ -54,7 +55,8 @@ body { font-family: var(--mono); overflow-x: hidden; }
   font-size: clamp(4.8rem, 16vw, 14rem);
   letter-spacing: normal;
   color: #FFF200;
-  text-align: center;
+  text-align: left;
+  padding-left: 40px;
   animation: film-load 0.6s ease forwards;
 }
 
@@ -411,6 +413,20 @@ body { font-family: var(--mono); overflow-x: hidden; }
   .filter-bar     { padding: 0 24px 20px; }
   #photoGrid      { padding: 0 var(--gap) var(--gap); }
 }
+
+/* ── Site credit ───────────────────────────────────────────── */
+.site-credit {
+  text-align: left;
+  padding: 40px 20px 40px 40px;
+  font-family: 'Times New Roman', 'Georgia', serif;
+  font-weight: 200;
+  font-style: italic;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  color: var(--fg);
+  opacity: 0.45;
+}
+.site-credit a { color: inherit; text-decoration: underline; text-underline-offset: 3px; }
 
 /* ── Page transition overlay ───────────────────────────────── */
 #page-transition {
