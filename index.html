@@ -42,7 +42,9 @@
   <section class="section--framed" data-title="couple" style="background: #F5E4EB; height: 115vh;">
     <a href="projects/couple/couple.html" class="frame-link" aria-label="Couple">
       <div class="frame" style="height: 80vh; width: auto; aspect-ratio: 5/6;">
-        <img src="./images/02_couple/Midtown-afternoon/1-8.jpg" alt="Couple" style="object-fit: cover; object-position: 50% 100%;" />
+        <video class="thumb-video" preload="metadata" muted loop playsinline
+               src="./projects/thumbnails/couple.mp4"
+               style="object-fit: cover; object-position: 50% 100%;"></video>
       </div>
     </a>
   </section>
@@ -53,7 +55,9 @@
   <section class="section--framed-right" data-title="family" style="background: linear-gradient(to bottom, #F5E4EB 0%, #F2E8DC 20%); height: 140vh; padding-right: 16px;">
     <a href="projects/family/family.html" class="frame-link" aria-label="Family" style="margin-right: 10vw;">
       <div class="frame" style="height: 80vh; width: auto; aspect-ratio: 5/6;">
-        <img src="./images/03_family/Central park_morning/3-1.jpg" alt="Family" style="object-fit: cover; object-position: 50% 100%;" />
+        <video class="thumb-video" preload="metadata" muted loop playsinline
+               src="./projects/thumbnails/family.mp4"
+               style="object-fit: cover; object-position: 50% 100%;"></video>
       </div>
     </a>
   </section>
@@ -62,7 +66,9 @@
   <section class="section--framed" data-title="solo" style="background: linear-gradient(to bottom, #F2E8DC 0%, #E4F0D5 20%); height: 110vh;">
     <a href="projects/solo/solo.html" class="frame-link" aria-label="Solo">
       <div class="frame" style="height: 90vh; width: auto;">
-        <img src="./images/04_Solo/Brooklyn_morning/1-11.jpg" alt="Solo" style="object-fit: contain; object-position: center center;" />
+        <video class="thumb-video" preload="metadata" muted loop playsinline
+               src="./projects/thumbnails/solo.mp4"
+               style="object-fit: contain; object-position: center center;"></video>
       </div>
     </a>
   </section>
@@ -71,7 +77,9 @@
   <section class="section--framed" data-title="wedding" style="background: linear-gradient(to bottom, #E4F0D5 0%, #F2E8DC 20%); height: 140vh;">
     <a href="projects/wedding/wedding.html" class="frame-link" aria-label="Wedding">
       <div class="frame" style="height: 82vh; width: calc(90vw);">
-        <img src="./images/05_wedding/02_/1-17.jpg" alt="Wedding" style="object-fit: cover; object-position: center center;" />
+        <video class="thumb-video" preload="metadata" muted loop playsinline
+               src="./projects/thumbnails/wedding.mp4"
+               style="object-fit: cover; object-position: center center;"></video>
       </div>
     </a>
   </section>
@@ -117,5 +125,21 @@
 -->
   <script src="script.js"></script>
   <script src="transition.js"></script>
+  <script>
+    // Show first frame, play on hover, pause on leave
+    document.querySelectorAll('.thumb-video').forEach(function(video) {
+      video.addEventListener('loadedmetadata', function() {
+        video.currentTime = 0.001;
+      });
+      var link = video.closest('.frame-link');
+      if (link) {
+        link.addEventListener('mouseenter', function() { video.play(); });
+        link.addEventListener('mouseleave', function() {
+          video.pause();
+          video.currentTime = 0.001;
+        });
+      }
+    });
+  </script>
 </body>
 </html>
