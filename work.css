@@ -1,0 +1,132 @@
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --fg:   #f0ede8;
+  --mono: 'Courier Prime', 'Courier New', Courier, monospace;
+}
+
+html, body {
+  background: #0a0a0a;
+  color: var(--fg);
+  font-family: var(--mono);
+}
+
+
+/* ── Nav ───────────────────────────────────────────────────── */
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 36px 40px;
+  z-index: 50;
+}
+
+.brand {
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  color: var(--fg);
+  text-decoration: none;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+}
+.brand:hover { opacity: 1; }
+
+.nav-links {
+  display: flex;
+  gap: 32px;
+}
+
+.nav-link {
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--fg);
+  text-decoration: none;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+}
+.nav-link:hover        { opacity: 1; }
+.nav-link--active      { opacity: 1; }
+
+
+/* ── Work grid ─────────────────────────────────────────────── */
+.work-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  padding: 100px 48px 48px;
+  min-height: 100vh;
+}
+
+.work-cell {
+  position: relative;
+  overflow: hidden;
+  display: block;
+  text-decoration: none;
+  aspect-ratio: 4 / 3;
+}
+
+.work-cell__bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  transition: transform 0.7s ease, filter 0.7s ease;
+  filter: brightness(0.62);
+}
+
+.work-cell:hover .work-cell__bg {
+  transform: scale(1.04);
+  filter: brightness(0.80);
+}
+
+/* Label */
+.work-cell__label {
+  position: absolute;
+  bottom: 28px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--fg);
+  opacity: 0.7;
+  transition: opacity 0.3s;
+  z-index: 2;
+}
+
+.work-cell:hover .work-cell__label {
+  opacity: 1;
+}
+
+
+/* ── Mobile ────────────────────────────────────────────────── */
+@media (max-width: 600px) {
+  html, body { overflow: auto; }
+
+  .work-grid {
+    grid-template-columns: 1fr;
+    padding: 80px 24px 32px;
+    gap: 12px;
+  }
+
+  nav { padding: 24px; }
+}
+
+
+/* ── Page transition overlay ───────────────────────────────── */
+#page-transition {
+  position: fixed;
+  inset: 0;
+  background: #000;
+  z-index: 9999;
+  opacity: 1;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}

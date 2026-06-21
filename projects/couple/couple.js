@@ -142,23 +142,14 @@ const PHOTOS = [
   'Central park_afternoon/3-9.jpg',
 
   /* Central Park — Morning */
-  'Central park_morning/1-1(1).jpg',
   'Central park_morning/1-1.jpg',
-  'Central park_morning/1-12(1).jpg',
   'Central park_morning/1-12.jpg',
-  'Central park_morning/1-13(1).jpg',
   'Central park_morning/1-13.jpg',
-  'Central park_morning/1-16(1).jpg',
   'Central park_morning/1-16.jpg',
-  'Central park_morning/1-3(1).jpg',
   'Central park_morning/1-3.jpg',
-  'Central park_morning/1-4(1).jpg',
   'Central park_morning/1-4.jpg',
-  'Central park_morning/1-5(1).jpg',
   'Central park_morning/1-5.jpg',
-  'Central park_morning/1-6(1).jpg',
   'Central park_morning/1-6.jpg',
-  'Central park_morning/1-9(1).jpg',
   'Central park_morning/1-9.jpg',
 
   /* City Hall — Afternoon */
@@ -269,47 +260,63 @@ function formatLocation(loc) {
 /* ============================================================
    FILTER STATE
 ============================================================ */
-let filterLocation = false;
-let filterTime     = false;
-let displayPhotos  = []; // photos in current render order — used by lightbox
+let activeTime     = null;  // selected time key, or null
+let activeLocation = null;  // selected location key, or null
+let timePanelOpen  = false;
+let placePanelOpen = false;
+let displayPhotos  = [];    // photos in current render order — used by lightbox
 
 
 /* ============================================================
-   GROUPING & SORTING
+   SUB-FILTER UI
 ============================================================ */
-function buildGroups() {
-  const groups = {};
-  PHOTO_DATA.forEach(photo => {
-    const key = filterLocation && filterTime ? `${photo.location}||${photo.time}`
-              : filterLocation               ? photo.location
-              :                                photo.time; // filterTime only
-    if (!groups[key]) groups[key] = [];
-    groups[key].push(photo);
+const filterSubTime  = document.getElementById('filterSubTime');
+const filterSubPlace = document.getElementById('filterSubPlace');
+
+function getUniqueTimes() {
+  const seen = new Set();
+  const result = [];
+  PHOTO_DATA.forEach(p => { if (!seen.has(p.time)) { seen.add(p.time); result.push(p.time); } });
+  return result.sort((a, b) => (TIME_ORDER[a] ?? 99) - (TIME_ORDER[b] ?? 99));
+}
+
+function getUniqueLocations() {
+  const seen = new Set();
+  const result = [];
+  PHOTO_DATA.forEach(p => { if (!seen.has(p.location)) { seen.add(p.location); result.push(p.location); } });
+  return result.sort((a, b) => a.localeCompare(b));
+}
+
+function renderSubTime() {
+  filterSubTime.innerHTML = '';
+  if (!timePanelOpen) return;
+  getUniqueTimes().forEach(time => {
+    const btn = document.createElement('button');
+    btn.className = 'filter-sub-btn' + (activeTime === time ? ' active' : '');
+    btn.textContent = formatTime(time);
+    btn.addEventListener('click', () => {
+      activeTime = (activeTime === time) ? null : time;
+      renderSubTime();
+      renderGrid();
+    });
+    filterSubTime.appendChild(btn);
   });
-  return groups;
 }
 
-function compareKeys(a, b) {
-  if (filterLocation && filterTime) {
-    const [locA, timeA] = a.split('||');
-    const [locB, timeB] = b.split('||');
-    const locCmp = locA.localeCompare(locB);
-    if (locCmp !== 0) return locCmp;
-    return (TIME_ORDER[timeA] ?? 99) - (TIME_ORDER[timeB] ?? 99);
-  }
-  if (filterTime) {
-    return (TIME_ORDER[a] ?? 99) - (TIME_ORDER[b] ?? 99);
-  }
-  return a.localeCompare(b); // location only: alphabetical
-}
-
-function formatKey(key) {
-  if (filterLocation && filterTime) {
-    const [loc, time] = key.split('||');
-    return `${formatLocation(loc)}  —  ${formatTime(time)}`;
-  }
-  if (filterTime) return formatTime(key);
-  return formatLocation(key);
+function renderSubPlace() {
+  filterSubPlace.innerHTML = '';
+  if (!placePanelOpen) return;
+  getUniqueLocations().forEach(loc => {
+    const btn = document.createElement('button');
+    btn.className = 'filter-sub-btn' + (activeLocation === loc ? ' active' : '');
+    btn.textContent = formatLocation(loc);
+    btn.addEventListener('click', () => {
+      activeLocation = (activeLocation === loc) ? null : loc;
+      renderSubPlace();
+      renderGrid();
+    });
+    filterSubPlace.appendChild(btn);
+  });
 }
 
 
@@ -348,74 +355,46 @@ function renderGrid() {
   grid.innerHTML = '';
   displayPhotos  = [];
 
-  if (!filterLocation && !filterTime) {
-    // No active filter: single flat grid in PHOTOS array order
-    const groupGrid = document.createElement('div');
-    groupGrid.className = 'group-grid';
-    let rowCount = 0;
-    PHOTO_DATA.forEach(photo => {
-      const idx = displayPhotos.length;
-      displayPhotos.push(photo);
-      groupGrid.appendChild(createCell(photo, idx));
-      groupGrid.appendChild(createEmptyCell());
-      rowCount++;
-      if (rowCount % 8 === 0) {
-        const rs = document.createElement('div');
-        rs.className = 'grid-row-spacer';
-        groupGrid.appendChild(rs);
-      }
-    });
-    grid.appendChild(groupGrid);
-    return;
-  }
+  const filtered = PHOTO_DATA.filter(p =>
+    (!activeTime     || p.time     === activeTime) &&
+    (!activeLocation || p.location === activeLocation)
+  );
 
-  const groups     = buildGroups();
-  const sortedKeys = Object.keys(groups).sort(compareKeys);
-
-  sortedKeys.forEach(key => {
-    const groupEl  = document.createElement('div');
-    groupEl.className = 'photo-group';
-
-    const labelEl  = document.createElement('div');
-    labelEl.className   = 'group-label';
-    labelEl.textContent = formatKey(key);
-    groupEl.appendChild(labelEl);
-
-    const groupGrid = document.createElement('div');
-    groupGrid.className = 'group-grid';
-
-    let rowCount = 0;
-    groups[key].forEach(photo => {
-      const idx = displayPhotos.length;
-      displayPhotos.push(photo);
-      groupGrid.appendChild(createCell(photo, idx));
-      groupGrid.appendChild(createEmptyCell());
-      rowCount++;
-      if (rowCount % 8 === 0) {
-        const rs = document.createElement('div');
-        rs.className = 'grid-row-spacer';
-        groupGrid.appendChild(rs);
-      }
-    });
-
-    groupEl.appendChild(groupGrid);
-    grid.appendChild(groupEl);
+  const groupGrid = document.createElement('div');
+  groupGrid.className = 'group-grid';
+  let rowCount = 0;
+  filtered.forEach(photo => {
+    const idx = displayPhotos.length;
+    displayPhotos.push(photo);
+    groupGrid.appendChild(createCell(photo, idx));
+    groupGrid.appendChild(createEmptyCell());
+    rowCount++;
+    if (rowCount % 4 === 0) {
+      const rs = document.createElement('div');
+      rs.className = 'grid-row-spacer';
+      groupGrid.appendChild(rs);
+    }
   });
+  grid.appendChild(groupGrid);
 }
 
 
 /* ============================================================
    FILTER BUTTONS
 ============================================================ */
-document.getElementById('btnPlace').addEventListener('click', function () {
-  filterLocation = !filterLocation;
-  this.classList.toggle('active', filterLocation);
+document.getElementById('btnTime').addEventListener('click', function () {
+  timePanelOpen = !timePanelOpen;
+  if (!timePanelOpen) { activeTime = null; }
+  this.classList.toggle('active', timePanelOpen);
+  renderSubTime();
   renderGrid();
 });
 
-document.getElementById('btnTime').addEventListener('click', function () {
-  filterTime = !filterTime;
-  this.classList.toggle('active', filterTime);
+document.getElementById('btnPlace').addEventListener('click', function () {
+  placePanelOpen = !placePanelOpen;
+  if (!placePanelOpen) { activeLocation = null; }
+  this.classList.toggle('active', placePanelOpen);
+  renderSubPlace();
   renderGrid();
 });
 

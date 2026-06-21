@@ -117,7 +117,7 @@ body { font-family: var(--mono); overflow-x: hidden; }
 
 .group-grid {
   display: grid;
-  grid-template-columns: repeat(8, 1fr 0.8fr);
+  grid-template-columns: repeat(4, 1fr 0.8fr);
   gap: var(--gap);
 }
 
@@ -255,7 +255,7 @@ body { font-family: var(--mono); overflow-x: hidden; }
 /* ── Mobile ────────────────────────────────────────────────── */
 @media (max-width: 900px) {
   :root { --cols: 8; }
-  .group-grid { grid-template-columns: repeat(8, 1fr); }
+  .group-grid { grid-template-columns: repeat(4, 1fr); }
   .grid-cell--empty { display: none; }
   .grid-row-spacer { display: none; }
 }

@@ -161,7 +161,7 @@ function renderGrid() {
       groupGrid.appendChild(createCell(src, group.label, idx));
       groupGrid.appendChild(createEmptyCell());
       rowCount++;
-      if (rowCount % 8 === 0) {
+      if (rowCount % 4 === 0) {
         const rs = document.createElement('div');
         rs.className = 'grid-row-spacer';
         groupGrid.appendChild(rs);
