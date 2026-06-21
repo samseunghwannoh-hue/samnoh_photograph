@@ -83,18 +83,19 @@ nav {
 }
 
 .instagram-handle {
-  font-family: var(--mono);
-  font-size: clamp(0.8rem, 1.8vw, 1.1rem);
-  letter-spacing: 0.22em;
+  font-family: 'Times New Roman', 'Georgia', serif;
+  font-weight: 200;
+  font-style: italic;
+  font-size: clamp(0.9rem, 1.8vw, 1.2rem);
+  letter-spacing: 0.1em;
   color: var(--fg);
   text-decoration: none;
   opacity: 0.88;
-  transition: opacity 0.25s, letter-spacing 0.25s;
+  transition: opacity 0.25s;
 }
 
 .instagram-handle:hover {
   opacity: 1;
-  letter-spacing: 0.28em;
 }
 
 
